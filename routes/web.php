@@ -15,19 +15,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 
-Route::get('demo', function () {
-//    $fundService = new \App\Services\FundService();
-//
-//    dd($fundService->getDetail('202015'));
-//    $stockService = new \App\Services\StockService();
-//
-//    dd($stockService->getDetail('600900'));
-
-//    dd(calcFutureValue(100, 0.05, 4));
-//    dd();
-
-    dd(
-        calcFutureValue(61.39, 0.05, 10),
-        calcPresentValue(100,0.05,10));
-});
 
