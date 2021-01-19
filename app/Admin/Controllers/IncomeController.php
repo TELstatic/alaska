@@ -3,9 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Forms\IncomeForm;
-use App\Admin\Forms\InterestForm;
 use App\Admin\Repositories\Income;
-use App\Admin\Repositories\Interest;
 use Dcat\Admin\Http\Controllers\AdminController;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Show;

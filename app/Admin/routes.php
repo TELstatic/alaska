@@ -44,4 +44,5 @@ Route::group([
 
     $router->resource('annuity', 'AnnuityController');
 
+    $router->resource('favorite', 'FavoriteController');
 });

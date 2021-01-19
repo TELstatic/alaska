@@ -3,11 +3,8 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Forms\InterestForm;
-use App\Admin\Forms\LoanForm;
 use App\Admin\Repositories\Interest;
-use App\Admin\Repositories\Loan;
 use App\Exports\InterestExport;
-use App\Exports\LoanExport;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Http\Controllers\AdminController;
 use Dcat\Admin\Layout\Content;

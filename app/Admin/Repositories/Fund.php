@@ -23,7 +23,11 @@ class Fund extends Repository
 
     public function detail(Show $show)
     {
-        return $this->fundService->getDetail(request('code',202015));
+//        $code = $show->getKey();
+
+        $code = request('code', 202015);
+
+        return $this->fundService->getDetail($code);
     }
 
     public function get(Grid\Model $model)
@@ -31,22 +35,9 @@ class Fund extends Repository
         $currentPage = $model->getCurrentPage();
         $perPage = $model->getPerPage();
 
-        $files = scandir(storage_path('date'));
+        $code = request('code', 202015);
 
-        unset($files[0]);
-        unset($files[1]);
-
-        sort($files);
-
-        $data = [];
-
-        foreach ($files as $file) {
-            $data[] = [
-                'id'   => str_replace('.json', '', $file),
-                'year' => str_replace('.json', '', $file),
-                'name' => $file,
-            ];
-        }
+        $data = $this->fundService->getInfo($code);
 
         $offset = ($currentPage - 1) * $perPage;
 

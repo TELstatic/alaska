@@ -3,17 +3,11 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Forms\AnnualizedForm;
-use App\Admin\Forms\LoanForm;
 use App\Admin\Repositories\Annualized;
-use App\Admin\Repositories\Loan;
-use App\Exports\LoanExport;
-use Dcat\Admin\Grid;
 use Dcat\Admin\Http\Controllers\AdminController;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Show;
 use Dcat\Admin\Widgets\Card;
-use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 
 class AnnualizedController extends AdminController
 {

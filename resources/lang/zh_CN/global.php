@@ -34,6 +34,8 @@ return [
         'stats'    => '统计',
         'Holiday'  => '节假日',
         'holiday'  => '节假日',
+        'Favorite' => '我的自选',
+        'favorite' => '我的自选',
     ],
     'options' => [
         //

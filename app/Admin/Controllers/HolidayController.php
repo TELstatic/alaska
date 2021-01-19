@@ -3,12 +3,10 @@
 namespace App\Admin\Controllers;
 
 use App\Admin\Repositories\Holiday;
-use App\Models\Catalog;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
-use Dcat\Admin\Layout\Content;
-use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
+use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Widgets\Card;
 use Dcat\Admin\Widgets\Markdown;
 
@@ -44,7 +42,11 @@ class HolidayController extends AdminController
 
     public function content($filename)
     {
-        return file_get_contents($filename);
+        try {
+            return file_get_contents($filename);
+        } catch (\Exception $exception) {
+            abort(404);
+        }
     }
 
     /**

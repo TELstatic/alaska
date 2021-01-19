@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'fields' => [
+    'fields'  => [
         'id'                    => 'ID',
         'name'                  => '名称',
         'username'              => '用户名',
@@ -22,13 +22,14 @@ return [
         'path'                  => '路径',
         'input'                 => '输入',
     ],
-    'labels' => [
+    'labels'  => [
         'list'     => '列表',
         'edit'     => '编辑',
         'detail'   => '详细',
         'create'   => '创建',
         'root'     => '顶级',
         'scaffold' => '代码生成器',
+        'Favorite' => '我的自选',
     ],
     'options' => [
         //

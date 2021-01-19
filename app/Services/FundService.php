@@ -21,27 +21,21 @@ class FundService
 
     public function getInfo($code)
     {
-        $key = $this->getKey($code);
+        $url = $this->url.'/fund';
 
-        Cache::forget($key);
+        $params = [
+            'code' => $code,
+        ];
 
-        return Cache::remember($key, 24 * 60 * 60, function () use ($code) {
-            $url = $this->url.'/fund';
+        $client = new Client();
 
-            $params = [
-                'code' => $code,
-            ];
+        $response = $client->get($url, [
+            'query' => $params,
+        ]);
 
-            $client = new Client();
+        $result = json_decode($response->getBody()->getContents(), true);
 
-            $response = $client->get($url, [
-                'query' => $params,
-            ]);
-
-            $result = json_decode($response->getBody()->getContents(), true);
-
-            return $result['data'][0];
-        });
+        return $result['data'];
     }
 
     public function getDetail($code)

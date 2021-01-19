@@ -2,21 +2,13 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Forms\FundForm;
-use App\Admin\Forms\LoanForm;
+use App\Admin\Actions\Show\FavorStock;
 use App\Admin\Forms\StockForm;
-use App\Admin\Repositories\Fund;
-use App\Admin\Repositories\Holiday;
-use App\Admin\Repositories\Loan;
 use App\Admin\Repositories\Stock;
-use App\Models\Catalog;
-use Dcat\Admin\Form;
-use Dcat\Admin\Grid;
+use Dcat\Admin\Http\Controllers\AdminController;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Show;
-use Dcat\Admin\Http\Controllers\AdminController;
 use Dcat\Admin\Widgets\Card;
-use Dcat\Admin\Widgets\Markdown;
 use Illuminate\Support\Str;
 
 class StockController extends AdminController
@@ -28,7 +20,7 @@ class StockController extends AdminController
             ->header('工具')
             ->description('股票查询')
             ->body(new Card(new StockForm()))
-            ->body($this->detail(0));
+            ->body($this->detail());
     }
 
 
@@ -39,8 +31,10 @@ class StockController extends AdminController
      *
      * @return mixed
      */
-    protected function detail($id)
+    protected function detail()
     {
+        $id = request('code', 600900);
+
         return Show::make($id, new Stock(), function (Show $show) {
             $show->field('code', '股票代码');
             $show->field('name', '股票名称');
@@ -67,6 +61,10 @@ class StockController extends AdminController
             $show->disableListButton();
             $show->disableEditButton();
             $show->disableQuickEdit();
+
+            $show->tools(function (Show\Tools $tools) {
+                $tools->append(new FavorStock());
+            });
         });
     }
 }
