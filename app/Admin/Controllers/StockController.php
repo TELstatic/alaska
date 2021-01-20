@@ -61,6 +61,7 @@ class StockController extends AdminController
             $grid->column('volume', '成交量(手)');
             $grid->column('turnover', '成交额(万)');
             $grid->column('date', '时间');
+            $grid->disableCreateButton();
             $grid->disableEditButton();
             $grid->disableDeleteButton();
         });
