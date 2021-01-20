@@ -32,6 +32,7 @@ class ManagerForm extends Form
     public function form()
     {
         $this->text('keyword', '基金经理');
+        $this->html('数据来源: <a target="_blank" href="//fund.eastmoney.com/">天天基金网</a>');
     }
 
     public function default()
