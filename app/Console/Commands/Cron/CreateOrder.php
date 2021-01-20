@@ -3,7 +3,8 @@
 namespace App\Console\Commands\Cron;
 
 use App\Models\Automatic;
-use App\Models\Order;
+use App\Services\HolidayService;
+use App\Services\OrderService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -37,14 +38,29 @@ class CreateOrder extends Command
      * 每天下午 4点
      *
      * @return int
+     * @throws \Exception
      */
     public function handle()
     {
+        $holidayService = new HolidayService(now());
+        $orderService = new OrderService();
+
         Automatic::query()
             ->with('project')
-            ->chunkById(100, function ($automatics) {
+            ->chunkById(100, function ($automatics) use ($holidayService, $orderService) {
                 foreach ($automatics as $automatic) {
                     $now = now();
+
+                    if (isset($automatic->next_applied_at) &&
+                        Carbon::parse($automatic->next_applied_at)->toDateString() == $now->toDateString()) {
+                        $orderService->store($automatic);
+
+                        $automatic->update([
+                            'next_applied_at' => null,
+                        ]);
+
+                        continue;
+                    }
 
                     switch ($automatic->type) {
                         case Automatic::TYPE_WEEK:
@@ -80,33 +96,15 @@ class CreateOrder extends Command
                             break;
                     }
 
-                    // 工作日 todo 国家节假日 排除
-                    if ($now->isWeekday()) {
-                        if ($now->isFriday()) {
-                            $confirmedAt = $now->addDays(3);
-                        } else {
-                            $confirmedAt = $now->addDays();
-                        }
+                    if ($holidayService->isLegalDay()) {
+                        $orderService->store($automatic);
                     } else {
-                        if ($now->isSaturday()) {
-                            $confirmedAt = $now->addDays(2);
-                        } else {
-                            $confirmedAt = $now->addDays();
-                        }
+                        $automatic->update([
+                            'next_applied_at' => $holidayService
+                                ->getNextWeekday()
+                                ->toDateTimeString(),
+                        ]);
                     }
-
-                    // todo 自动计算 基金 股票 确认份额 && 确认净值
-                    Order::query()->create([
-                        'price'        => $automatic->price,
-                        'type'         => Order::TYPE_AUTO,
-                        'project_id'   => $automatic->project_id,
-                        '确认金额'         => $automatic->price * (1 - $automatic->project->getAttribute('买入费率')),
-                        '确认份额'         => 0,
-                        '确认净值'         => 0,
-                        '手续费'          => $automatic->price * $automatic->project->getAttribute('买入费率'),
-                        'created_at'   => $automatic->paid_at,
-                        'confirmed_at' => $confirmedAt->toDate(),
-                    ]);
                 }
             });
     }

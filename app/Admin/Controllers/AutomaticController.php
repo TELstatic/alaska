@@ -117,7 +117,9 @@ class AutomaticController extends AdminController
             $form->display('id');
             $form->text('name')->required();
             $form->select('project_id', '项目')
-                ->options(Project::query()->pluck('name', 'id'))
+                ->options(Project::query()
+                    ->whereNotNull('url')
+                    ->pluck('name', 'id'))
                 ->required();
             $form->decimal('price')->required();
 

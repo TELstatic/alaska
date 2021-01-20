@@ -46,4 +46,8 @@ Route::group([
     $router->resource('annuity', 'AnnuityController');
 
     $router->resource('favorite', 'FavoriteController');
+
+    $router->resource('manager', 'ManagerController');
+
+    $router->resource('company', 'CompanyController');
 });

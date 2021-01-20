@@ -16,3 +16,14 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'welcome');
 
 
+Route::get('demo', function () {
+    $date = \Carbon\Carbon::parse('2021-09-21');
+
+    $holidayService = new \App\Services\HolidayService($date);
+
+    if ($holidayService->isLegalDay()) {
+        dd($date->toDateTimeString());
+    } else {
+        dd($holidayService->getNextWeekday()->toDateTimeString());
+    }
+});

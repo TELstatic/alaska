@@ -32,7 +32,7 @@ class HolidayController extends AdminController
 
     public function template(Content $content)
     {
-        $filename = storage_path('app/2021.json');
+        $filename = public_path('2021.json');
 
         return $content
             ->header('节假日管理')
@@ -77,7 +77,7 @@ class HolidayController extends AdminController
         return Form::make(new Holiday(), function (Form $form) use ($years) {
             $form->display('id');
             $form->select('year', '年份')->options($years)->required();
-            $form->file('file', '配置')->required();
+            $form->file('file', '配置')->required()->disk('local');
             $form->html('<a target="_blank" href="'.route('holiday.template').'">参考模板</a>');
             $form->html('参考模版数字含义: 0=>调休日 1=>节假日(双倍工资) 2=>节假日(三倍工资)');
             $form->html('如已选年份存在配置,新配置将会覆盖旧配置');

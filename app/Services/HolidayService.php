@@ -35,6 +35,11 @@ class HolidayService
         $this->data = json_decode(file_get_contents($file), true);
     }
 
+    public function setDate($date)
+    {
+        $this->date = Carbon::parse($date);
+    }
+
     public function getData()
     {
         return $this->data;
@@ -70,5 +75,25 @@ class HolidayService
         }
 
         return false;
+    }
+
+    public function isLegalDay()
+    {
+        if ($this->isWeekday() && !$this->isHoliday() && !$this->isOffDay()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getNextWeekday()
+    {
+        $this->date = $this->date->addDay();
+
+        if ($this->isLegalDay()) {
+            return $this->date;
+        } else {
+            return $this->getNextWeekday();
+        }
     }
 }
