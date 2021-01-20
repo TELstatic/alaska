@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Admin\Actions\Show\FavorStock;
 use App\Admin\Forms\StockForm;
 use App\Admin\Repositories\Stock;
+use Dcat\Admin\Grid;
 use Dcat\Admin\Http\Controllers\AdminController;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Show;
@@ -21,6 +22,48 @@ class StockController extends AdminController
             ->description('股票查询')
             ->body(new Card(new StockForm()))
             ->body($this->detail());
+    }
+
+    public function board(Content $content)
+    {
+        return $content
+            ->header('工具')
+            ->description('股票大盘信息')
+            ->body($this->grid());
+    }
+
+    protected function grid()
+    {
+        return Grid::make(new Stock(), function (Grid $grid) {
+            $grid->column('code', '股票代码');
+            $grid->column('name', '股票名称');
+            $grid->column('type', '类型')->display(function ($name) {
+                if (Str::startsWith($name, 'GP')) {
+                    return '股票';
+                }
+
+                if (Str::startsWith($name, 'ZS')) {
+                    return '指数';
+                }
+
+                return $name;
+            });
+            $grid->column('open', '今日开票价');
+            $grid->column('close', '昨日收盘价');
+            $grid->column('price', '实时价格');
+            $grid->column('priceChange', '开盘后价格变化');
+            $grid->column('changePercent', '价格变化')->display(function ($name) {
+                return formatRate($name, false);
+            });
+            $grid->column('high', '开盘截止目前最高价');
+            $grid->column('low', '开盘截止目前最低价');
+            $grid->column('totalWorth', '总市值');
+            $grid->column('volume', '成交量(手)');
+            $grid->column('turnover', '成交额(万)');
+            $grid->column('date', '时间');
+            $grid->disableEditButton();
+            $grid->disableDeleteButton();
+        });
     }
 
 

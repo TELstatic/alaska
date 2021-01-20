@@ -11,9 +11,13 @@ function formatNumber($number, $precision = 0)
 }
 
 // 格式化百分比
-function formatRate($rate)
+function formatRate($rate, $flag = true)
 {
-    return floatval($rate) * 100 .'%';
+    if ($flag) {
+        return floatval($rate) * 100 .'%';
+    }
+
+    return floatval($rate).'%';
 }
 
 /**

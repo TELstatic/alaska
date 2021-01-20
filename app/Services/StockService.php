@@ -47,4 +47,25 @@ class StockService
             return $result['data'][0];
         });
     }
+
+    /**
+     * 股票大盘信息
+     * @desc 股票大盘信息
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @author TELstatic
+     * Date: 2021/1/20/0020
+     */
+    public function getBoard()
+    {
+        $url = $this->url.'/stock/board';
+
+        $client = new Client();
+
+        $response = $client->get($url);
+
+        $result = json_decode($response->getBody()->getContents(), true);
+
+        return $result['data'];
+    }
 }

@@ -31,6 +31,7 @@ Route::group([
     $router->get('loan/export', 'LoanController@export')->name('loan.export');
     $router->resource('loan', 'LoanController');
     $router->resource('fund', 'FundController');
+    $router->get('stock/board', 'StockController@board');
     $router->resource('stock', 'StockController');
 
     $router->get('holiday/template', 'HolidayController@template')->name('holiday.template');
