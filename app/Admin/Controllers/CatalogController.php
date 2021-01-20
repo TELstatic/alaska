@@ -20,7 +20,8 @@ class CatalogController extends AdminController
         return Grid::make(new Catalog(), function (Grid $grid) {
             $grid->column('id')->sortable();
             $grid->column('name');
-            $grid->column('logo')->image('',50,50);
+            $grid->column('logo')
+                ->image('',50,50);
             $grid->column('risk_level')->select(Catalog::$riskLevelMap);
             $grid->column('created_at');
             $grid->column('updated_at')->sortable();
@@ -61,7 +62,7 @@ class CatalogController extends AdminController
         return Form::make(new Catalog(), function (Form $form) {
             $form->display('id');
             $form->text('name')->required();
-            $form->image('logo');
+            $form->image('logo')->saveFullUrl();
             $form->select('risk_level')
                 ->options(Catalog::$riskLevelMap)
                 ->default(Catalog::RISK_LEVEL_R1)->required();
