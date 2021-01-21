@@ -59,7 +59,7 @@ class FundService
 
             $result = json_decode($response->getBody()->getContents(), true);
 
-            return $result['data'];
+            return $result['data'] ?? [];
         });
     }
 }

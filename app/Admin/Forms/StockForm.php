@@ -38,7 +38,6 @@ class StockForm extends Form
 
         $this->text('code', '股票代码');
         $this->select('exchange', '交易所')
-            ->default('sh')
             ->options($exchanges);
     }
 
@@ -46,7 +45,7 @@ class StockForm extends Form
     {
         return [
             'code'     => request('code', '600900'),
-            'exchange' => request('exchange', 'sh'),
+            'exchange' => request('exchange'),
         ];
     }
 }
