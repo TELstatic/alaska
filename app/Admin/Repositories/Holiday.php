@@ -38,12 +38,14 @@ class Holiday extends Repository
 
         $data = [];
 
-        foreach ($files as $file) {
-            $data[] = [
-                'id'   => str_replace('.json', '', $file),
-                'year' => str_replace('.json', '', $file),
-                'name' => $file,
-            ];
+        if (count($files) > 0) {
+            foreach ($files as $file) {
+                $data[] = [
+                    'id'   => str_replace('.json', '', $file),
+                    'year' => str_replace('.json', '', $file),
+                    'name' => $file,
+                ];
+            }
         }
 
         $offset = ($currentPage - 1) * $perPage;

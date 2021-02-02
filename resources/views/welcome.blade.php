@@ -112,7 +112,7 @@
     @endif
 
     <div class="content bg-bubbles">
-        <div class="title m-b-md" style="color: white;margin-top: 25%;">
+        <div class="title m-b-md" style="color: white;margin-top: 20%">
             {{config('app.name')}}
         </div>
 
@@ -200,11 +200,11 @@
             "detect_on": "canvas",
             "events": {
                 "onhover": {
-                    "enable": false,
+                    "enable": true,
                     "mode": "repulse"
                 },
                 "onclick": {
-                    "enable": false,
+                    "enable": true,
                     "mode": "push"
                 },
                 "resize": true

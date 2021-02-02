@@ -39,11 +39,13 @@ class Favorite extends Repository
             ->where('type', $type)
             ->paginate($perPage);
 
-        foreach ($favorites as $favorite) {
-            if ($favorite->type === \App\Models\Favorite::TYPE_FUND) {
-                $favorite['info'] = $this->fundService->getDetail($favorite->code);
-            } else {
-                $favorite['info'] = $this->stockService->getDetail($favorite->code, '');
+        if ($favorites->isNotEmpty()) {
+            foreach ($favorites as $favorite) {
+                if ($favorite->type === \App\Models\Favorite::TYPE_FUND) {
+                    $favorite['info'] = $this->fundService->getDetail($favorite->code);
+                } else {
+                    $favorite['info'] = $this->stockService->getDetail($favorite->code, '');
+                }
             }
         }
 

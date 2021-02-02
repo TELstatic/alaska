@@ -2,16 +2,12 @@
 
 namespace App\Admin\Controllers;
 
-use App\Admin\Forms\LoanForm;
 use App\Admin\Forms\ManagerForm;
-use App\Admin\Repositories\Favorite;
 use App\Admin\Repositories\Manager;
-use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Http\Controllers\AdminController;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Widgets\Card;
-use Illuminate\Support\Str;
 
 class ManagerController extends AdminController
 {

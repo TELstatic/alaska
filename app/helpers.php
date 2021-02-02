@@ -253,3 +253,12 @@ function calcFutureValue($presentValue, $rate, $years)
 
     return $data;
 }
+
+function formatTitle($value = null)
+{
+    if (is_array($value)) {
+        return implode(" - ", $value);
+    }
+
+    return $value;
+}

@@ -70,6 +70,8 @@ class HolidayController extends AdminController
      */
     protected function form()
     {
+        $years = [];
+
         for ($i = -1; $i <= 1; $i++) {
             $years[now()->addYears($i)->year] = now()->addYears($i)->year;
         }

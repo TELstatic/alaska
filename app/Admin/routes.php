@@ -50,4 +50,6 @@ Route::group([
     $router->resource('manager', 'ManagerController');
 
     $router->resource('company', 'CompanyController');
+
+    $router->get('reward','RewardController@index');
 });
