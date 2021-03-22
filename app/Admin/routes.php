@@ -29,7 +29,8 @@ Route::group([
     $router->resource('automatic', 'AutomaticController');
 
     $router->get('loan/export', 'LoanController@export')->name('loan.export');
-    $router->resource('loan', 'LoanController');
+    $router->get('loan', 'LoanController@index');
+
     $router->resource('fund', 'FundController');
     $router->get('stock/board', 'StockController@board');
     $router->resource('stock', 'StockController');
@@ -40,16 +41,16 @@ Route::group([
     $router->get('interest/export', 'InterestController@export')->name('interest.export');
     $router->resource('interest', 'InterestController');
 
-    $router->resource('annualized', 'AnnualizedController');
-    $router->resource('income', 'IncomeController');
+    $router->get('annualized', 'AnnualizedController@index');
+    $router->get('income', 'IncomeController@index');
 
-    $router->resource('annuity', 'AnnuityController');
+    $router->get('annuity', 'AnnuityController@index');
 
     $router->resource('favorite', 'FavoriteController');
 
-    $router->resource('manager', 'ManagerController');
+    $router->get('manager', 'ManagerController@index');
 
-    $router->resource('company', 'CompanyController');
+    $router->get('company', 'CompanyController@index');
 
     $router->get('reward','RewardController@index');
 });

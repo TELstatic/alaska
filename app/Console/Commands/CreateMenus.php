@@ -45,7 +45,7 @@ class CreateMenus extends Command
      */
     public function handle()
     {
-        if (! $this->confirmToProceed()) {
+        if (!$this->confirmToProceed()) {
             return 1;
         }
 
@@ -267,6 +267,8 @@ class CreateMenus extends Command
 
             $bar->advance();
         }
+
+        (new Menu())->flushCache();
 
         $bar->finish();
         $this->info('');

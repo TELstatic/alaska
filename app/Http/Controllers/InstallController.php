@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateInstallationAccountRequest;
 use App\Http\Requests\CreateInstallationDatabaseRequest;
 use App\User;
+use Dcat\Admin\Models\Administrator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -195,22 +196,29 @@ class InstallController extends Controller
     private function createDefaultUser()
     {
         try {
-            $user = new User;
+            Administrator::query()->truncate();
 
-            $user->name = request()->input('name');
-            $user->email = request()->input('email');
-            $user->password = Hash::make(request()->input('password'));
+            Administrator::query()->create([
+                'name'     => request()->input('name'),
+                'username' => request()->input('username'),
+                'password' => bcrypt(request()->input('password')),
+            ]);
 
-            $user->save();
-
-            $user->markEmailAsVerified();
-
+            $this->createDefaultRole();
             $this->createDefaultMenus();
         } catch (\Exception $e) {
             return $e->getMessage();
         }
 
         return true;
+    }
+
+    private function createDefaultRole()
+    {
+        try {
+            Artisan::call('zone:create-role', ['--force' => true]);
+        } catch (\Exception $e) {
+        }
     }
 
     private function createDefaultMenus()

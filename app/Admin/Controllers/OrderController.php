@@ -100,22 +100,22 @@ class OrderController extends AdminController
         return Show::make($id, Order::with(['project', 'project.currency']), function (Show $show) {
             $show->field('id');
             $show->field('price')->as(function ($value) {
-                return str_replace('.0000', '', $value);
+                return formatNumber($value);
             });
             $show->field('type')->using(Order::$typeMap);
             $show->field('project.name', '项目');
             $show->field('project.currency.name', '货币');
             $show->field('确认金额')->as(function ($value) {
-                return str_replace('.0000', '', $value);
+                return formatNumber($value);
             });
             $show->field('确认份额')->as(function ($value) {
-                return str_replace('.0000', '', $value);
+                return formatNumber($value);
             });
             $show->field('确认净值')->as(function ($value) {
-                return str_replace('.0000', '', $value);
+                return formatNumber($value);
             });
             $show->field('手续费')->as(function ($value) {
-                return str_replace('.0000', '', $value);
+                return formatNumber($value);
             });
             $show->field('confirmed_at');
             $show->field('created_at');

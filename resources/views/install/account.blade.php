@@ -13,7 +13,7 @@
 
             <div class="form-group">
                 <label for="i_name">{{ __('Name') }}</label>
-                <input id="i_name" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" autofocus>
+                <input id="i_name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" autofocus>
                 @if ($errors->has('name'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('name') }}</strong>
@@ -22,11 +22,11 @@
             </div>
 
             <div class="form-group">
-                <label for="i_email">{{ __('Email address') }}</label>
-                <input id="i_email" type="text" dir="ltr" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}">
-                @if ($errors->has('email'))
+                <label for="i_username">{{ __('UserName') }}</label>
+                <input id="i_username" type="text" dir="ltr" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}">
+                @if ($errors->has('username'))
                     <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('email') }}</strong>
+                        <strong>{{ $errors->first('username') }}</strong>
                     </span>
                 @endif
             </div>

@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Order;
 use App\Models\Project;
+use App\Services\ProjectService;
 
 class OrderObserver
 {
@@ -17,10 +18,12 @@ class OrderObserver
     {
         $project = Project::query()->findOrFail($order->project_id);
 
+        $cost = $project->orders->sum('确认金额') / $project->orders->sum('确认份额');
+
         $project->update([
-            '最新净值' => $order->getAttribute('确认净值'),
-            '持有金额' => $project->getAttribute('持有金额') + $order->getAttribute('price'),
-            '持有份额' => $project->getAttribute('持有份额') + $order->getAttribute('确认份额'),
+            '持有金额'  => $project->orders->sum('确认份额') * $cost,
+            '持有份额'  => $project->orders->sum('确认份额'),
+            '持仓成本价' => $cost,
         ]);
     }
 
@@ -34,10 +37,12 @@ class OrderObserver
     {
         $project = Project::with('orders')->findOrFail($order->project_id);
 
+        $cost = $project->orders->sum('确认金额') / $project->orders->sum('确认份额');
+
         $project->update([
-            '持有金额' => $project->orders->sum('price'),
-            '持有份额' => $project->orders->sum('确认份额'),
-            '最新净值' => $order->getAttribute('确认净值'),
+            '持有金额'  => $project->orders->sum('确认份额') * $cost,
+            '持有份额'  => $project->orders->sum('确认份额'),
+            '持仓成本价' => $cost,
         ]);
     }
 
@@ -51,9 +56,12 @@ class OrderObserver
     {
         $project = Project::with('orders')->findOrFail($order->project_id);
 
+        $cost = $project->orders->sum('确认金额') / $project->orders->sum('确认份额');
+
         $project->update([
-            '持有金额' => $project->orders->sum('price'),
-            '持有份额' => $project->orders->sum('确认份额'),
+            '持有金额'  => $project->orders->sum('确认份额') * $cost,
+            '持有份额'  => $project->orders->sum('确认份额'),
+            '持仓成本价' => $cost,
         ]);
     }
 

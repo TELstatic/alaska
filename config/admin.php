@@ -85,7 +85,7 @@ return [
     | Html title for all pages.
     |
     */
-    'title'          => 'Alaska',
+    'title'          => '钱多多助手',
 
     /*
     |--------------------------------------------------------------------------
@@ -200,13 +200,12 @@ return [
     'menu'                      => [
         'cache'           => [
             // enable cache or not
-            'enable' => false,
+            'enable' => true,
             'store'  => 'file',
         ],
 
         // Whether enable menu bind to a permission.
         'bind_permission' => true,
-
     ],
 
     /*
